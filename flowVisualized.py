@@ -556,8 +556,8 @@ def generate_figure6(
 
 
 if __name__ == "__main__":
-    mat_file_path = "VertVel_Cornfield_2425_flowVisualized.mat"
-    output_directory = "./test_output"
+    mat_file_path = "input02/VertVel_Cornfield_2425_flowVisualized.mat"
+    output_directory = "outputs/flowVisualized"
     Path(output_directory).mkdir(parents=True, exist_ok=True)
 
     print(f"Loading data via mat-io from {mat_file_path}...")
