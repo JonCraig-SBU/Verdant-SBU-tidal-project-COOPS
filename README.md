@@ -1,31 +1,27 @@
 # ADCP: Tidal Resource Assessment Workflow
 
-This workspace contains notebooks, CSV outputs, and a classifier script used to process and analyze ADCP (Acoustic Doppler Current Profiler) velocity data for tidal resource assessment.
+This workspace contains notebooks, CSV outputs, and a classifier script used to process and analyze ADCP (Acoustic Doppler Current Profiler) velocity data listed by [CO-OPS](https://tidesandcurrents.noaa.gov/) for tidal resource assessment.
 
 ## What is in this folder
 
 - Notebook-driven analysis pipeline for:
-  - ADCP data import and reshaping
-  - Orientation correction
-  - Principal flood/ebb direction estimation
-  - Ebb/flood/slack phase labeling
-  - Tidal-cycle and turbulence/intensity analysis
-  - Annual Energy Production (AEP) estimation from depth-dependent ADCP data
+  - Import from CO-OPS for data-preprocessing
+  - Principal flow axis between ebb and flood
+  - Labeling of depth-averaged and depth-dependent data as ebb, flood, and slack
+  - Tidal-cycle plots with cosine fitting
+  - Turbulence intensity (TI) analysis 
+  - Annual energy production (AEP) estimation from depth-dependent data
 - Reusable Python script:
   - `ebbFloodClassifier.py` for phase classification from depth-averaged velocity time series
-- Input and derived data files (`input/*.csv`, `*.csv`)
+- Input and derived data files (`input/*.csv`, `*.csv`) respectively organized into folders "inputs" and "outputs"
 
 ## Project structure
 
 - `input/`
-  - Raw or source files used by notebooks and scripts
-  - Includes annual CSVs and `RC.nc`
-- `coops-data.ipynb`
-  - CO-OPS related data handling
-- `dataframe-from-ADCP.ipynb`
-  - Build/clean ADCP dataframe
-- `orientation-correction.ipynb`
-  - Velocity orientation/correction steps
+  - Source files from CO-OPS with user-formatted titles
+  - Includes user-formatted CSVs
+- `FolderReadDF.ipynb`
+  - Extracts data from a chosen site's CSV files to arrange them according to depth bins and timeframe
 - `principal_flood_ebb_calculation.ipynb`
   - Compute principal axis and flood/ebb bearings
 - `label_df-depthDep.ipynb`
@@ -35,11 +31,11 @@ This workspace contains notebooks, CSV outputs, and a classifier script used to 
 - `ebbFloodClassifier.py`
   - Script version of ebb/flood/slack classification
 - `profiles.ipynb`
-  - Profile-level exploration
+  - Visualization of depth-dependent data through different vertical velocity profiles
 - `TI-calculator.ipynb`
-  - Turbulence intensity calculations
+  - Turbulence intensity calculations including depth-dependent visualization and correction Doppler noise
 - `tidal-cycles.ipynb`
-  - Tidal-cycle segmentation and analysis
+  - Tidal-cycle segmentation and analysis with cosine fits, power-law fits, and profile classes
 - `adcp_aep_pcu_iec.ipynb`
   - AEP estimation using principal component velocity (PCU) and the IEC bin-sum method
   - Uses hub-bin speed `V_hub(t) = |PCU(t, hub_bin)|` as the turbine inflow input
@@ -93,8 +89,8 @@ python ebbFloodClassifier.py data.csv --thr 0.1 --smooth-n 5
 
 ## Notes
 
-- Units are expected in m/s; the script includes a heuristic conversion when values appear to be in mm/s.
-- Keep intermediate and final CSV outputs in this folder for notebook compatibility unless you also update paths in notebooks.
+- Units are expected in m/s; the script converts units from knots and cm/s.
+- Keep intermediate and final CSV outputs in "./outputs" for notebook compatibility unless you also update paths in notebooks.
 
 ## `adcp_aep_pcu_iec.ipynb` usage
 
