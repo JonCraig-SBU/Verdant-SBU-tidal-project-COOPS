@@ -148,6 +148,7 @@ def main():
         raise ValueError(f"East/North columns not found. Available: {list(df.columns)}")
 
     # Parse time
+    #args.time_format=True # DEBUGGING on 04, August
     if args.time_format:
         df["Time"] = pd.to_datetime(df[args.time_col], format=args.time_format)
     else:
